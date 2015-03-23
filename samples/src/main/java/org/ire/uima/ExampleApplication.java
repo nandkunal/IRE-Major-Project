@@ -68,6 +68,7 @@ public class ExampleApplication {
           // process documents
           for (int i = 0; i < files.length; i++) {
             if (!files[i].isDirectory()) {
+            	System.out.println("--------------"+files[i].getName()+"----------");
               processFile(files[i], ae, cas);
             }
           }
