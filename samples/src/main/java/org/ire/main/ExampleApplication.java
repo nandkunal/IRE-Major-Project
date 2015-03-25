@@ -15,7 +15,7 @@ import org.apache.uima.cas.CAS;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.util.FileUtils;
 import org.apache.uima.util.XMLInputSource;
-import org.ire.uima.PrintAnnotations;
+import org.ire.util.PrintAnnotations;
 import org.ire.uima.tika.TikaExtraction;
 import org.ire.uima.tokenizer.Sentence_Type;
 import org.ire.util.FileExtractor;

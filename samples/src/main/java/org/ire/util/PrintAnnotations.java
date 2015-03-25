@@ -1,3 +1,5 @@
+package org.ire.util;
+
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -17,7 +19,6 @@
  * under the License.
  */
 
-package org.ire.uima;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -101,7 +102,7 @@ public class PrintAnnotations {
 			while (iter.isValid()) {
 				FeatureStructure fs = iter.get();
 
-				String text = printFeatures(fs, aCAS, 0, aOut);
+			String text = printFeatures(fs, aCAS, 0, aOut);
 				if (text != null) {
 					//if (!stopWordList.contains(text)) {
 						if (text.matches("^[a-z]+$")) {
