@@ -1,12 +1,12 @@
 package org.ire.uima;
 
-import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngine;
@@ -15,7 +15,6 @@ import org.apache.uima.cas.CAS;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.util.FileUtils;
 import org.apache.uima.util.XMLInputSource;
-import org.ire.uima.tokenizer.Sentence_Type;
 
 /**
  * An example application that reads documents from files, sends them though an Analysis Engine, and
@@ -106,21 +105,12 @@ public class ExampleApplication {
   private static void processFile(File aFile, AnalysisEngine aAE, CAS aCAS) throws IOException,
           AnalysisEngineProcessException {
 	List<String> stopWordsList=new ArrayList<String>();
-	Scanner sc =null;
-	try
-	{
-		sc=new Scanner("resources/stopwords.txt");
-		sc.useDelimiter("\n");
-		while(sc.hasNext())
-		{
-			stopWordsList.add(sc.next());
-		}
-	}catch(Exception e){
-		
-	}finally
-	{
-		sc.close();
-	}
+    BufferedReader br = new BufferedReader(new FileReader("resources/stopwords.txt"));
+    String line;
+    while((line=br.readLine()) != null)
+    {
+    	stopWordsList.add(line);
+    }
 	String fileName=aFile.getName();
     System.out.println("Processing file " + aFile.getName());
 

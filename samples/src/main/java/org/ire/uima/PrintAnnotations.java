@@ -90,10 +90,10 @@ public class PrintAnnotations {
     
     // iterate
     FileWriter fw =null;
-    int i=0;
+  
     try
     {
-    File f = new File("token-output/"+i+".txt");	
+    File f = new File("token-output/"+fileName+".txt");	
     fw = new FileWriter(f);
     fw.write(fileName);
     fw.write("\n");
