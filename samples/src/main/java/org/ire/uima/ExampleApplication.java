@@ -2,7 +2,11 @@ package org.ire.uima;
 
 import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngine;
@@ -11,6 +15,7 @@ import org.apache.uima.cas.CAS;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.util.FileUtils;
 import org.apache.uima.util.XMLInputSource;
+import org.ire.uima.tokenizer.Sentence_Type;
 
 /**
  * An example application that reads documents from files, sends them though an Analysis Engine, and
@@ -43,7 +48,7 @@ public class ExampleApplication {
         validArgs = taeDescriptor.exists() && !taeDescriptor.isDirectory()
                 && inputDir.isDirectory();
       }*/
-      taeDescriptor=new File("analysis_engine/SimpleNameRecognizer_RegEx_TAE.xml");
+      taeDescriptor=new File("analysis_engine/SimpleTokenAndSentenceAnnotator.xml");
       inputDir=new File("data");
       if (!validArgs) {
         printUsageMessage();
@@ -100,6 +105,23 @@ public class ExampleApplication {
    */
   private static void processFile(File aFile, AnalysisEngine aAE, CAS aCAS) throws IOException,
           AnalysisEngineProcessException {
+	List<String> stopWordsList=new ArrayList<String>();
+	Scanner sc =null;
+	try
+	{
+		sc=new Scanner("resources/stopwords.txt");
+		sc.useDelimiter("\n");
+		while(sc.hasNext())
+		{
+			stopWordsList.add(sc.next());
+		}
+	}catch(Exception e){
+		
+	}finally
+	{
+		sc.close();
+	}
+	String fileName=aFile.getName();
     System.out.println("Processing file " + aFile.getName());
 
     String document = FileUtils.file2String(aFile);
@@ -110,10 +132,10 @@ public class ExampleApplication {
 
     // process
     aAE.process(aCAS);
-
+    
     // print annotations to System.out
-    PrintAnnotations.printAnnotations(aCAS, System.out);
-
+    PrintAnnotations.printAnnotations(aCAS,aCAS.getAnnotationType(), System.out,fileName,stopWordsList);
+   
     // reset the CAS to prepare it for processing the next document
     aCAS.reset();
   }

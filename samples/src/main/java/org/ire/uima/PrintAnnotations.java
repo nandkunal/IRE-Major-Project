@@ -20,10 +20,13 @@
 package org.ire.uima;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.tika.io.FilenameUtils;
 import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.analysis_engine.ResultSpecification;
@@ -39,6 +42,7 @@ import org.apache.uima.cas.text.AnnotationFS;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.util.FileUtils;
 import org.apache.uima.util.XMLInputSource;
+import org.ire.uima.tokenizer.WordAnnot;
 
 /**
  * A simple example of how to extract information from the CAS. This example retrieves all
@@ -64,7 +68,8 @@ public class PrintAnnotations {
     // iterate
     while (iter.isValid()) {
       FeatureStructure fs = iter.get();
-      printFS(fs, aCAS, 0, aOut);
+      System.out.println(fs.getClass());
+     // printFS(fs, aCAS, 0, aOut);
       iter.moveToNext();
     }
   }
@@ -79,15 +84,45 @@ public class PrintAnnotations {
    * @param aOut
    *          the PrintStream to which output will be written
    */
-  public static void printAnnotations(CAS aCAS, Type aAnnotType, PrintStream aOut) {
+  public static void printAnnotations(CAS aCAS, Type aAnnotType, PrintStream aOut,String fileName,List<String> stopWordList) {
     // get iterator over annotations
     FSIterator iter = aCAS.getAnnotationIndex(aAnnotType).iterator();
-
+    
     // iterate
+    FileWriter fw =null;
+    int i=0;
+    try
+    {
+    File f = new File("token-output/"+i+".txt");	
+    fw = new FileWriter(f);
+    fw.write(fileName);
+    fw.write("\n");
     while (iter.isValid()) {
       FeatureStructure fs = iter.get();
-      printFS(fs, aCAS, 0, aOut);
+     
+      String text = printFeatures(fs, aCAS, 0, aOut);
+      if(text!=null){
+    	  if(!stopWordList.contains(text)){
+    		  if(text.matches("^[a-z]+$")){
+      fw.write(text);
+      fw.write(",");
+    		  }
+    	  }
+      }
+     
+      
       iter.moveToNext();
+    }
+    }catch(Exception e)
+    {
+    e.printStackTrace();	
+    }finally{
+    	try {
+			fw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
   }
 
@@ -212,6 +247,24 @@ public class PrintAnnotations {
     }
   }
 
+  
+  
+  public static String printFeatures(FeatureStructure aFS, CAS aCAS, int aNestingLevel, PrintStream aOut) {
+
+
+	    // if it's an annotation, print the first 64 chars of its covered text
+	  String coveredText=null;
+	    if (aFS instanceof AnnotationFS) {
+	      AnnotationFS annot = (AnnotationFS) aFS;
+	      if(annot instanceof WordAnnot){
+	       coveredText = annot.getCoveredText();
+	      }
+	    }
+       return coveredText;
+	    
+	  }
+  
+  
   /**
    * Prints tabs to a PrintStream.
    * 
@@ -268,7 +321,7 @@ public class PrintAnnotations {
 
       // print results
       Type annotationType = cas.getTypeSystem().getType(CAS.TYPE_NAME_ANNOTATION);
-      PrintAnnotations.printAnnotations(cas, annotationType, System.out);
+     // PrintAnnotations.printAnnotations(cas, annotationType, System.out);
 
       // destroy AE
       ae.destroy();
