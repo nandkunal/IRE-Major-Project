@@ -7,9 +7,9 @@ import weka.core.converters.CSVLoader;
 import java.io.File;
  
 public class convert {
-  private static final String ARFF_FILE = "./wordScore/wordOut1.arff";
-  private static final String ARFF_FILE1 = "./wordScore/wordOut2.arff";
-private static final String WORD_SCORE_WORD_OUT_TXT = "./wordScore/wordOut.txt";
+  private static final String ARFF_FILE = "wordScore/wordOut1.arff";
+  private static final String ARFF_FILE1 = "wordScore/wordOut2.arff";
+private static final String WORD_SCORE_WORD_OUT_TXT = "wordScore/word.txt";
 
 /**
    * takes 2 arguments:

@@ -12,8 +12,8 @@ import java.util.TreeMap;
 
 public class ScoreCalculator {
 	private TreeMap<String,HashMap<String, Integer> > wordSet;
-	private static final String OUTPUT_PATH="./wordScore/word.txt";
-	private static final String INPUTFOLDER="./token-output";
+	private static final String OUTPUT_PATH="wordScore/word.txt";
+	private static final String INPUTFOLDER="token-output";
 	private PrintWriter pr;
 	private List<String> fileNames;
 	
