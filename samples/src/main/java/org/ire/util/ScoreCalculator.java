@@ -101,22 +101,31 @@ public class ScoreCalculator {
 		}
 	}
 	public void printOutPut(){
+		StringBuilder br=new StringBuilder();;
 		pr.print("FileNames,");
 		for(String file:fileNames){
-			pr.print(file+",");
+			//pr.print(file+",");
+			br.append(file+",");
 		}
+		pr.print(br.toString().subSequence(0, br.toString().length()-1));
 		pr.println();
 		for(Map.Entry<String, HashMap<String, Integer>> entry: wordSet.entrySet() ){
 			pr.print(entry.getKey());
 			pr.print(",");
+			br = new StringBuilder();
 			for(String file:fileNames){
 				if(entry.getValue().containsKey(file)){
-					pr.print(entry.getValue().get(file));
+					//pr.print(entry.getValue().get(file));
+					br.append(entry.getValue().get(file));
 				}
-				else
-					pr.print("0");
-				pr.print(",");
+				else{
+					//pr.print("0");
+					br.append("0");
+				}
+				br.append(",");
+				//pr.print(",");
 			}
+			pr.print(br.toString().subSequence(0, br.toString().length()-1));
 			pr.println();
 		}
 	}

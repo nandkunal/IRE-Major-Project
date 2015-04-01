@@ -1,4 +1,9 @@
-FileNames,New_IBM_Fellows.txt
+@relation word.txt
+
+@attribute FileNames {acclaimed,accolades,achievements,active,almaden,and,architecture,architectures,areas,ariz,assessmentmitigation,authors,availability,awards,beyond,bit,blueprints,booch,bridge,brightest,canada,cash,center,chamberlin,charles,chief,co,company,companys,compilers,conferred,contributions,contributor,corporate,covering,coveted,creation,creative,ctre,customer,customers,data,database,defines,defining,delivers,design,designation,designs,development,directions,distinction,distinguished,donald,donofrio,dr,driver,earned,ebusiness,effectiveness,efficiency,elevated,emerging,employees,encouraged,energized,engagements,engineering,enhance,enhances,enterprise,eserver,established,event,excellence,exceptional,exciting,expert,extraordinary,fellow,fellows,focusing,galambos,generation,george,global,grady,granted,group,hardware,high,highperformance,history,honor,honorees,ibm,ibms,igs,including,individuals,industrystandard,influenced,initiating,initiatives,innovation,innovative,innovators,internationally,internet,inventor,java,language,languages,lead,leader,leaders,leadership,led,major,manufacturing,market,means,microprocessor,middleware,million,modeling,mr,named,newly,nick,objectoriented,officer,operational,original,our,outstanding,passion,patterns,peers,permeates,platform,portions,potential,preeminent,presented,president,prestigious,principal,process,processor,products,programming,projects,provided,query,rational,recognition,recognize,recognized,reference,reinvention,relational,research,researcher,reuse,reward,risk,roadmap,rod,science,scientist,scottsdale,semistructured,senior,server,services,share,smith,software,softwareintensive,solution,solutions,special,specializes,sql,stability,strategist,structure,structured,sustained,system,systems,technical,technologies,technology,title,today,tools,tradition,typically,uml,unified,unstructured,vice,visual,web,webb,widely,work,world,xml,xquery,yielded,zseries}
+@attribute New_IBM_Fellows.txt numeric
+
+@data
 acclaimed,1
 accolades,1
 achievements,3
