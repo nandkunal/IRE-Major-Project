@@ -47,11 +47,15 @@ import weka.core.Instances;
 			int i=0;
 			String[] fileNames = new String[100000];
 			int l = 0;
-			try (BufferedReader br = new BufferedReader(new FileReader(FILE_TXT))) {
+			try 
+			{   BufferedReader br = new BufferedReader(new FileReader(FILE_TXT));
 			    String line;
 			    while ((line = br.readLine()) != null) {
 			       fileNames[l++] = line;
 			    }
+			}catch(Exception e)
+			{
+				e.printStackTrace();
 			}
 			for (int j = 0;j < l;j++) 
 			{
