@@ -47,10 +47,10 @@ public class FileExtractor {
 				line=line.trim();
 				words=line.split(SPACE);
 				for(int i=0;i<words.length;i++){
-					words[i]=words[i].toLowerCase();
-					if(!stopWordSet.contains(words[i])){
+					//words[i]=words[i].toLowerCase();
+					if(!stopWordSet.contains(words[i].toLowerCase())){
 						words[i]=words[i].replaceAll("\\W", "");
-						System.out.print(words[i]+SPACE);;
+						//System.out.print(words[i]+SPACE);;
 						builder.append(words[i]);
 						builder.append(SPACE);
 					}

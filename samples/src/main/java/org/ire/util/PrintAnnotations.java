@@ -19,7 +19,6 @@ package org.ire.util;
  * under the License.
  */
 
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -27,7 +26,6 @@ import java.io.PrintStream;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.tika.io.FilenameUtils;
 import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.analysis_engine.ResultSpecification;
@@ -43,6 +41,7 @@ import org.apache.uima.cas.text.AnnotationFS;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.util.FileUtils;
 import org.apache.uima.util.XMLInputSource;
+import org.ire.uima.tokenizer.Capital;
 import org.ire.uima.tokenizer.WordAnnot;
 
 /**
@@ -86,7 +85,7 @@ public class PrintAnnotations {
 	 *            the PrintStream to which output will be written
 	 */
 	public static void printAnnotations(CAS aCAS, Type aAnnotType,
-			PrintStream aOut, String fileName) {
+			PrintStream aOut, String fileName,ClassType classType) {
 		// get iterator over annotations
 		FSIterator iter = aCAS.getAnnotationIndex(aAnnotType).iterator();
 
@@ -99,21 +98,24 @@ public class PrintAnnotations {
 			fw = new FileWriter(f);
 			fw.write(fileName);
 			fw.write("\n");
+			StringBuilder content = new StringBuilder();
 			while (iter.isValid()) {
 				FeatureStructure fs = iter.get();
 
-			String text = printFeatures(fs, aCAS, 0, aOut);
+				String text = printFeatures(fs, aCAS, 0, aOut,classType);
 				if (text != null) {
-					//if (!stopWordList.contains(text)) {
-						if (text.matches("^[a-z]+$")) {
-							fw.write(text);
-							fw.write(",");
-						}
-					//}
+					content.append(text);
+					content.append(",");
+					// fw.write(text);
+					// fw.write(",");
+
 				}
 
 				iter.moveToNext();
 			}
+			if (content.toString().length() > 0)
+				fw.write(content.toString().substring(0,
+						content.toString().length() - 1));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -255,13 +257,16 @@ public class PrintAnnotations {
 	}
 
 	public static String printFeatures(FeatureStructure aFS, CAS aCAS,
-			int aNestingLevel, PrintStream aOut) {
+			int aNestingLevel, PrintStream aOut,ClassType classType) {
 
 		// if it's an annotation, print the first 64 chars of its covered text
 		String coveredText = null;
 		if (aFS instanceof AnnotationFS) {
 			AnnotationFS annot = (AnnotationFS) aFS;
-			if (annot instanceof WordAnnot) {
+			if (ClassType.UNIGRAM==classType && annot instanceof WordAnnot) { //Capital
+				coveredText = annot.getCoveredText();
+			}else if(ClassType.CAPITALIZE==classType && annot instanceof Capital) { //Capital
+				//System.out.println("capital");
 				coveredText = annot.getCoveredText();
 			}
 		}

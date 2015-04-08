@@ -33,68 +33,74 @@ import org.apache.uima.jcas.tcas.Annotation;
  */
 public class SimpleTokenAndSentenceAnnotator extends JCasAnnotator_ImplBase {
 
-  static abstract class Maker {
-    abstract Annotation newAnnotation(JCas jcas, int start, int end);
-  }
+	static abstract class Maker {
+		abstract Annotation newAnnotation(JCas jcas, int start, int end);
+	}
 
-  JCas jcas;
+	JCas jcas;
 
-  String input;
+	String input;
 
-  ParsePosition pp = new ParsePosition(0);
+	ParsePosition pp = new ParsePosition(0);
 
-  // ****************************************
-  // * Static vars holding break iterators
-  // ****************************************
- // static final BreakIterator sentenceBreak = BreakIterator.getSentenceInstance(Locale.US);
+	// ****************************************
+	// * Static vars holding break iterators
+	// ****************************************
+	// static final BreakIterator sentenceBreak =
+	// BreakIterator.getSentenceInstance(Locale.US);
 
-  static final BreakIterator wordBreak = BreakIterator.getWordInstance(Locale.US);
+	static final BreakIterator wordBreak = BreakIterator
+			.getWordInstance(Locale.US);
 
-  // *********************************************
-  // * function pointers for new instances *
-  // *********************************************
- /* static final Maker sentenceAnnotationMaker = new Maker() {
-    Annotation newAnnotation(JCas jcas, int start, int end) {
-      return new Sentence(jcas, start, end);
-    }
-  };*/
+	// *********************************************
+	// * function pointers for new instances *
+	// *********************************************
+	/*
+	 * static final Maker sentenceAnnotationMaker = new Maker() { Annotation
+	 * newAnnotation(JCas jcas, int start, int end) { return new Sentence(jcas,
+	 * start, end); } };
+	 */
 
-  static final Maker tokenAnnotationMaker = new Maker() {
-    Annotation newAnnotation(JCas jcas, int start, int end) {
-      return new WordAnnot(jcas, start, end);
-    }
-  };
+	static final Maker tokenAnnotationMaker = new Maker() {
+		Annotation newAnnotation(JCas jcas, int start, int end) {
+			return new WordAnnot(jcas, start, end);
+		}
+	};
 
-  // *************************************************************
-  // * process *
-  // *************************************************************
-  public void process(JCas aJCas) throws AnalysisEngineProcessException {
-    jcas = aJCas;
-    input = jcas.getDocumentText();
+	// *************************************************************
+	// * process *
+	// *************************************************************
+	public void process(JCas aJCas) throws AnalysisEngineProcessException {
+		jcas = aJCas;
+		input = jcas.getDocumentText();
 
-    // Create Annotations
-   // makeAnnotations(sentenceAnnotationMaker, sentenceBreak);
-    makeAnnotations(tokenAnnotationMaker, wordBreak);
-  }
+		// Create Annotations
+		// makeAnnotations(sentenceAnnotationMaker, sentenceBreak);
+		makeAnnotations(tokenAnnotationMaker, wordBreak);
+	}
 
-  // *************************************************************
-  // * Helper Methods *
-  // *************************************************************
-  void makeAnnotations(Maker m, BreakIterator b) {
-    b.setText(input);
-    for (int end = b.next(), start = b.first(); end != BreakIterator.DONE; start = end, end = b
-            .next()) {
-      // eliminate all-whitespace tokens
-      boolean isWhitespace = true;
-      for (int i = start; i < end; i++) {
-        if (!Character.isWhitespace(input.charAt(i))) {
-          isWhitespace = false;
-          break;
-        }
-      }
-      if (!isWhitespace) {
-        m.newAnnotation(jcas, start, end).addToIndexes();
-      }
-    }
-  }
+	// *************************************************************
+	// * Helper Methods *
+	// *************************************************************
+	void makeAnnotations(Maker m, BreakIterator b) {
+		b.setText(input);
+		for (int end = b.next(), start = b.first(); end != BreakIterator.DONE; start = end, end = b
+				.next()) {
+			// eliminate all-whitespace tokens
+			boolean isWhitespace = true;
+			for (int i = start; i < end; i++) {
+				if (!Character.isWhitespace(input.charAt(i))) {
+					isWhitespace = false;
+					break;
+				}
+			}
+			if (!isWhitespace) {
+
+				//System.out.println(input.substring(start, end)+"--");
+
+				m.newAnnotation(jcas, start, end).addToIndexes();
+
+			}
+		}
+	}
 }
