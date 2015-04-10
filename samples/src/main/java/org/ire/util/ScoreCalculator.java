@@ -32,7 +32,7 @@ public class ScoreCalculator {
 		String inpFiles[] = files.list();
 
 		for (int i = 0; i < inpFiles.length; i++) {
-			System.out.println("calculating frequency of " + inpFiles[i]);
+			//System.out.println("calculating frequency of " + inpFiles[i]);
 			extractWordScoreFromFile(inpFiles[i]);
 		}
 	}
@@ -101,34 +101,87 @@ public class ScoreCalculator {
 	}
 
 	public void printOutPut() {
-		StringBuilder br = new StringBuilder();
-		;
-		pr.print("FileNames,");
+		System.out.println("-------result----------");
+		System.out.print("FileNames,");
+
 		for (String file : fileNames) {
-			// pr.print(file+",");
-			br.append(file + ",");
+			System.out.print(file + ",");
 		}
-		pr.print(br.toString().subSequence(0, br.toString().length() - 1));
-		pr.println();
+		System.out.println();
 		for (Map.Entry<String, HashMap<String, Integer>> entry : wordSet
 				.entrySet()) {
-			pr.print(entry.getKey());
-			pr.print(",");
-			br = new StringBuilder();
+			System.out.print(entry.getKey());
+			System.out.print(",");
 			for (String file : fileNames) {
 				if (entry.getValue().containsKey(file)) {
-					// pr.print(entry.getValue().get(file));
-					br.append(entry.getValue().get(file));
-				} else {
-					// pr.print("0");
-					br.append("0");
-				}
-				br.append(",");
-				// pr.print(",");
+					System.out.print(entry.getValue().get(file));
+				} else
+					System.out.print("0");
+				System.out.print(",");
 			}
-			pr.print(br.toString().subSequence(0, br.toString().length() - 1));
-			pr.println();
+			System.out.println();
 		}
+	}
+	
+	public void printMatrix() {
+		int rowsize=fileNames.size()+1;
+		int colsize=wordSet.size()+1;
+		String[][] mat= new String[rowsize][colsize];
+		mat[0][0]="FileNames";
+		int row=1;
+		for (String file : fileNames) {
+			mat[row][0]=file;
+			row++;
+		}
+		int col=1;
+		for (Map.Entry<String, HashMap<String, Integer>> entry : wordSet
+				.entrySet()) {
+			mat[0][col]=entry.getKey();
+			col++;
+		}
+		
+	  
+		col=1;
+		for (Map.Entry<String, HashMap<String, Integer>> entry : wordSet
+				.entrySet()) {
+			
+			for (String file : fileNames) {
+				int rownum=getFileNameRowFromMatrix(mat,file);
+				if (entry.getValue().containsKey(file)) {
+					mat[rownum][col]=entry.getValue().get(file)+"";
+				} else
+					mat[rownum][col]="0";
+				
+			}
+			col++;
+		}
+		
+		for(int i=0;i<rowsize;i++)
+		{
+			for(int j=0;j<colsize;j++){
+				
+				//System.out.print(mat[i][j]+ ",");
+				
+				if(j==colsize-1){
+					pr.print(mat[i][j]);
+					break;
+				}else{
+					pr.print(mat[i][j]+",");
+				}
+				
+			}
+			pr.print("\n");
+			//System.out.println("");
+		}
+	}
+
+	private int getFileNameRowFromMatrix(String[][] mat, String file) {
+		for(int i=1;i<100;i++){
+			if(mat[i][0].equalsIgnoreCase(file)){
+				return i;
+			}
+		}
+		return 0;
 	}
 
 	public void close() {
@@ -138,8 +191,7 @@ public class ScoreCalculator {
 	public static void main(String[] args) {
 		ScoreCalculator sc = new ScoreCalculator();
 		sc.process();
-		// sc.printResult();
-		sc.printOutPut();
+		sc.printMatrix();
 		sc.close();
 	}
 }
