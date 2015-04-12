@@ -1,4 +1,4 @@
-IBM today elevated five employees to the title of IBM Fellow -- its most prestigious technical honor. The company also presented more than $2.8 million in cash awards to employees whose technical innovation have yielded exceptional value to the company and its customers.
+﻿IBM today elevated five employees to the title of IBM Fellow -- its most prestigious technical honor. The company also presented more than $2.8 million in cash awards to employees whose technical innovation have yielded exceptional value to the company and its customers.
 
 IBM conferred the accolades and awards at its 2003 Corporate Technical Recognition Event (CTRE) in Scottsdale, Ariz. CTRE is a 40-year tradition at IBM, established to recognize exceptional technical employees and reward them for extraordinary achievements and contributions to the company's technology leadership.
 
@@ -19,6 +19,4 @@ Among the special honorees at the 2003 CTRE are five employees who earned the co
 
 
 The title of IBM Fellow is the company's most preeminent technical distinction and is granted in recognition of outstanding and sustained technical achievements in engineering, programming, science and technology. Only 175 individuals have earned this designation in the company's history and, including the newly named Fellows, 56 are active employees. IBM Fellows are encouraged to further enhance their potential for creative achievements and typically work on special projects or research initiatives that lead the company in exciting new directions.
-
-
 

@@ -1,4 +1,4 @@
-Upcoming UIMA Seminars
+﻿Upcoming UIMA Seminars
 
 April 7, 2004 Distillery Lunch Seminar
 UIMA and its Metadata
@@ -18,5 +18,3 @@ May 11, 2004 UIMA Tutorial
 9:00AM-5:00PM in HAW GN-K35.
 
 This is a full-day, hands-on tutorial on UIMA, covering the development of Text Analysis Engines and Collection Processing Engines, as well as how to include these components in your own applications.
-
-

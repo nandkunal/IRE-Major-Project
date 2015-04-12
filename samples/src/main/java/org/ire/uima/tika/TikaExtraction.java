@@ -3,23 +3,27 @@ package org.ire.uima.tika;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.tika.Tika;
 import org.apache.tika.exception.TikaException;
 
 public class TikaExtraction {
 
-	private static final String RAWDATA = "./rawdata";
-	private File out;
-	private PrintWriter writer;
+	private static File out;
+	private static PrintWriter writer;
+	private static Map<String,String>convertedFileMap=new HashMap<String,String>();
+	
 
-	public void extractAndSaveInFile(File file, int filenum) {
+	private static void extractAndSaveInFile(String extractedDir,File file) {
 		Tika tika = new Tika();
 		try {
 			String filecontent = tika.parseToString(file);
-			out = new File("./data/" + filenum + ".txt");
+			out = new File(extractedDir+File.separator+FilenameUtils.getBaseName(file.getName())+ ".txt");
+			convertedFileMap.put(FilenameUtils.getBaseName(file.getName())+ ".txt",file.getName());
 			writer = new PrintWriter(out);
-			writer.println(file.getName());
 			writer.println(filecontent);
 			writer.close();
 
@@ -31,21 +35,21 @@ public class TikaExtraction {
 
 	}
 
-	public void extractTextFromRawData() {
-		File folder = new File(RAWDATA);
+	public static void extractTextFromRawData(String rawDataDir,String extractedDir) {
+		File folder = new File(rawDataDir);
 		File[] listOfFiles = folder.listFiles();
 		for (int i = 0; i < listOfFiles.length; i++) {
 			System.out.println("extracting data from " + listOfFiles[i] + " using tika");
-			extractAndSaveInFile(listOfFiles[i], i);
+			extractAndSaveInFile(extractedDir,listOfFiles[i]);
 			System.out.println("------------------------------------------");
 		}
 	}
-
-	public static void main(final String[] args) throws IOException,
-			TikaException {
-		TikaExtraction obj = new TikaExtraction();
-		obj.extractTextFromRawData();
-
+	
+	public static Map<String,String>getConvertedFileMap(){
+		return convertedFileMap;
 	}
+	
+	
+
 
 }
