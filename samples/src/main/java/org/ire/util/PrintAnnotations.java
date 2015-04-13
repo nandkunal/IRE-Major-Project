@@ -20,15 +20,17 @@ package org.ire.util;
  */
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.StringTokenizer;
 
-import org.apache.uima.UIMAFramework;
-import org.apache.uima.analysis_engine.AnalysisEngine;
-import org.apache.uima.analysis_engine.ResultSpecification;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.FSIterator;
 import org.apache.uima.cas.Feature;
@@ -38,10 +40,6 @@ import org.apache.uima.cas.IntArrayFS;
 import org.apache.uima.cas.StringArrayFS;
 import org.apache.uima.cas.Type;
 import org.apache.uima.cas.text.AnnotationFS;
-import org.apache.uima.resource.ResourceSpecifier;
-import org.apache.uima.util.FileUtils;
-import org.apache.uima.util.XMLInputSource;
-import org.ire.main.ExampleApplication;
 import org.ire.uima.tokenizer.Bigram;
 import org.ire.uima.tokenizer.Capital;
 import org.ire.uima.tokenizer.Punctuation;
@@ -58,7 +56,7 @@ import org.ire.uima.tokenizer.WordAnnot;
  */
 public class PrintAnnotations {
 	public static boolean isFirst = true;
-
+	public static Set<String> positiveSet, negativeSet;
 
 	/**
 	 * Prints all Annotations to a PrintStream.
@@ -81,6 +79,81 @@ public class PrintAnnotations {
 		}
 	}
 
+	public static void loadPositiveAndNegativeTextToMap() {
+
+		positiveSet = new HashSet<String>();
+		negativeSet = new HashSet<String>();
+
+		try {
+			File file = new File("posWords/positive.txt");
+			String word;
+			Scanner sc = new Scanner(file);
+			while (sc.hasNext()) {
+				word = sc.nextLine();
+				if (!positiveSet.contains(word)) {
+					positiveSet.add(word);
+				}
+			}
+			sc.close();
+
+			file = new File("posWords/negative.txt");
+			sc = new Scanner(file);
+			while (sc.hasNext()) {
+				word = sc.nextLine();
+				if (!negativeSet.contains(word)) {
+					negativeSet.add(word);
+				}
+			}
+			sc.close();
+		} catch (FileNotFoundException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * Function to handle postive and negative word count
+	 */
+	public static void processPosNegCount(String input, String fileName) {
+		FileWriter fw = null;
+		// int i=0;
+		try {
+			System.out.println(fileName);
+			// System.out.println("write");
+			File f = new File("token-output/" + fileName);
+			fw = new FileWriter(f, true);
+			fw.write("\nPOSNEG" + ",");
+			StringBuilder content = new StringBuilder();
+			StringTokenizer t = new StringTokenizer(input, " \n\t");
+			String word;
+			while (t.hasMoreTokens()) {
+				word = t.nextToken();
+				if (positiveSet.contains(word.toLowerCase())) {
+					// System.out.println("positive:"+word);
+					content.append("P" + ",");
+
+				}
+				if (negativeSet.contains(word.toLowerCase())) {
+					// System.out.println("negative:"+word);
+					content.append("N" + ",");
+				}
+			}
+			if (content.toString().length() > 0)
+				fw.write(content.toString().substring(0,
+						content.toString().length() - 1));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				fw.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+
 	/**
 	 * Prints all Annotations of a specified Type to a PrintStream.
 	 * 
@@ -92,7 +165,7 @@ public class PrintAnnotations {
 	 *            the PrintStream to which output will be written
 	 */
 	public static void printAnnotations(CAS aCAS, Type aAnnotType,
-			PrintStream aOut, String fileName,ClassType classType) {
+			PrintStream aOut, String fileName, ClassType classType) {
 		// get iterator over annotations
 		FSIterator iter = aCAS.getAnnotationIndex(aAnnotType).iterator();
 
@@ -101,20 +174,16 @@ public class PrintAnnotations {
 		// int i=0;
 		try {
 			System.out.println(fileName);
-			//System.out.println("write");
+			// System.out.println("write");
 			File f = new File("token-output/" + fileName);
-			fw = new FileWriter(f,true);
-			/*if(isFirst){
-				System.out.println("wowowowowo");
+			fw = new FileWriter(f, true);
 			fw.write(fileName);
-			isFirst=false;
-			}*/
-			fw.write("\n");
+			fw.write("\n"+classType + ",");
 			StringBuilder content = new StringBuilder();
 			while (iter.isValid()) {
 				FeatureStructure fs = iter.get();
 
-				String text = printFeatures(fs, aCAS, 0, aOut,classType);
+				String text = printFeatures(fs, aCAS, 0, aOut, classType);
 				if (text != null) {
 					content.append(text);
 					content.append(",");
@@ -269,32 +338,34 @@ public class PrintAnnotations {
 	}
 
 	public static String printFeatures(FeatureStructure aFS, CAS aCAS,
-			int aNestingLevel, PrintStream aOut,ClassType classType) {
+			int aNestingLevel, PrintStream aOut, ClassType classType) {
 
 		// if it's an annotation, print the first 64 chars of its covered text
 		String coveredText = null;
 		if (aFS instanceof AnnotationFS) {
 			AnnotationFS annot = (AnnotationFS) aFS;
-			if (ClassType.UNIGRAM==classType && annot instanceof WordAnnot) { 
+			if (ClassType.UNIGRAM == classType && annot instanceof WordAnnot) {
 				coveredText = annot.getCoveredText();
-			}else if(ClassType.CAPITALIZE==classType && annot instanceof Capital) { 
-				//System.out.println("capital");
+			} else if (ClassType.CAPITALIZE == classType
+					&& annot instanceof Capital) {
+				// System.out.println("capital");
 				coveredText = annot.getCoveredText();
-			}else if(ClassType.BIGRAM==classType && annot instanceof Bigram) { 
-				//System.out.println("capital");
+			} else if (ClassType.BIGRAM == classType && annot instanceof Bigram) {
+				// System.out.println("capital");
 				coveredText = annot.getCoveredText();
-			}else if(ClassType.PUNCTUATION==classType && annot instanceof Punctuation) { 
-				//System.out.println("capital");
+			} else if (ClassType.PUNCTUATION == classType
+					&& annot instanceof Punctuation) {
+				// System.out.println("capital");
 				coveredText = annot.getCoveredText();
-			}else if(ClassType.TRIGRAM==classType && annot instanceof Trigram) { 
-				//System.out.println("capital");
+			} else if (ClassType.TRIGRAM == classType
+					&& annot instanceof Trigram) {
+				// System.out.println("capital");
 				coveredText = annot.getCoveredText();
-			}else if(ClassType.URL==classType && annot instanceof URL) { 
-				//System.out.println("capital");
+			} else if (ClassType.URL == classType && annot instanceof URL) {
+				// System.out.println("capital");
 				coveredText = annot.getCoveredText();
 			}
-			
-			
+
 		}
 		return coveredText;
 

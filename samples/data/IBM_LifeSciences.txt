@@ -1,3 +1,4 @@
+IBM_LifeSciences.txt
 "Life sciences is one of the emerging markets at the heart of IBM's growth strategy," said John M. Thompson, IBM senior vice president & group executive, Software. "This investment is the first of a number of steps we will be taking to advance IBM's life sciences initiatives." In his role as newly appointed IBM Corporation vice chairman, effective September 1, Mr. Thompson will be responsible for integrating and accelerating IBM's efforts to exploit life sciences and other emerging growth areas.
 
 IBM estimates the market for IT solutions for life sciences will skyrocket from $3.5 billion today to more than $9 billion by 2003. Driving demand is the explosive growth in genomic, proteomic and pharmaceutical research. For example, the Human Genome Database is approximately three terabytes of data, or the equivalent of 150 million pages of information. The volume of life sciences data is doubling every six months. 

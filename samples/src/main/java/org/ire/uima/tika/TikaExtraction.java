@@ -23,7 +23,9 @@ public class TikaExtraction {
 			String filecontent = tika.parseToString(file);
 			out = new File(extractedDir+File.separator+FilenameUtils.getBaseName(file.getName())+ ".txt");
 			convertedFileMap.put(FilenameUtils.getBaseName(file.getName())+ ".txt",file.getName());
+			//System.out.println(convertedFileMap.get(FilenameUtils.getBaseName(file.getName())+ ".txt"));
 			writer = new PrintWriter(out);
+			writer.println(out.getName());
 			writer.println(filecontent);
 			writer.close();
 

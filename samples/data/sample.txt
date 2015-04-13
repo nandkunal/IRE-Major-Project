@@ -1,3 +1,4 @@
+sample.txt
 
 Suhas K S 
 
@@ -56,7 +57,7 @@ C++, Java, C, Python, Shell Scripting,  Java Script, Android
 
 HR Solutions in cloud, Data retrieval and mining, Database System 
 
-implementation,  Client ñ Server analysis simulator, Web2py , Selenium web 
+implementation,  Client ‚Äì Server analysis simulator, Web2py , Selenium web 
 driver , Test tool development and Automation 
 
  
@@ -85,27 +86,27 @@ Work
 
 Experience: 
 
-1. SuccessFactors  (SAP)                                         June 2012 ñ July 2014 
+1. SuccessFactors  (SAP)                                         June 2012 ‚Äì July 2014 
 
-? Worked as an in-house tool developer, UI Automation engineer . 
+ÔÇ∑ Worked as an in-house tool developer, UI Automation engineer . 
 
-? Implemented internal tool ëAutomated status report systemí. 
+ÔÇ∑ Implemented internal tool ‚ÄòAutomated status report system‚Äô. 
 
-? Worked on Selenium webdriver . 
+ÔÇ∑ Worked on Selenium webdriver . 
  
 
  2.  Research Assistant                                       July 2011 -  May  2012  
-? Worked under Dr. Anil Kumar KM for the research project ëMultimodal 
+ÔÇ∑ Worked under Dr. Anil Kumar KM for the research project ‚ÄòMultimodal 
 
-Opinion Miningí.  
+Opinion Mining‚Äô.  
 
-? The project mainly concentrated on processing natural language, emoticons 
+ÔÇ∑ The project mainly concentrated on processing natural language, emoticons 
 and short texts to determine the opinion expressed in the language. 
 
-? Project involved collection of huge amount of opinion expressing data 
+ÔÇ∑ Project involved collection of huge amount of opinion expressing data 
 using which weightage of polar words were calculated. 
 
-? Experiments were done to increase the machine learning capability in order 
+ÔÇ∑ Experiments were done to increase the machine learning capability in order 
 to produce more accurate results for opinionated texts. 
 
                    
@@ -113,7 +114,7 @@ to produce more accurate results for opinionated texts.
   
 3. IBM internship                                                 Jan 2011 to Dec 2012 
 
-? This Project was done under ìGlobal mentoring program by IBMî which 
+ÔÇ∑ This Project was done under ‚ÄúGlobal mentoring program by IBM‚Äù which 
 concentrated on the extraction and analysis of resources in different servers 
 
 and triggering the status and warning message to the administrator 
@@ -179,7 +180,7 @@ professors about the number of students taken their tests.
  
 
 5. Generic IOT Platform    (Raspberry pi, Mongo DB, node.js, android) 
-ñIn progress 
+‚ÄìIn progress 
 Project involves creation of platform between sensors and the end 
 
 application.  
@@ -205,16 +206,16 @@ semaphores, Sudoku solver, Instance config compare tool.
 
 Interests:       Travelling, Playing  guitar, Cycling, Table tennis, Trekking, Cooking  
 
-Achievements: ? Awarded as ìTeam playerî and ìAccountableî for the productive work in 
+Achievements: ÔÇ∑ Awarded as ‚ÄúTeam player‚Äù and ‚ÄúAccountable‚Äù for the productive work in 
 successfactors. 
 
-? Recognition certificate from IBM for successful completion of project with 
+ÔÇ∑ Recognition certificate from IBM for successful completion of project with 
 all satisfactory conditions. 
 
-? Awards for conducting technical workshops and sessions in various 
+ÔÇ∑ Awards for conducting technical workshops and sessions in various 
 colleges. 
 
-? Seminar was given on Automation coding and other best practices.  
+ÔÇ∑ Seminar was given on Automation coding and other best practices.  
 
 
 

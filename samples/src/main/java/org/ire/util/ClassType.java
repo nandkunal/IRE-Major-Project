@@ -9,6 +9,7 @@ public enum ClassType {
 	CAPITALIZE,
 	SENTENCECOUNT,
 	PUNCTUATION,
-	URL
+	URL,
+	POSITIVE_NEGATIVE
 
 }

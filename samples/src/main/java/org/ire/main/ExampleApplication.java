@@ -47,6 +47,8 @@ public class ExampleApplication {
 		
 		case URL: return URL_ANNOTATOR;
 		
+		case POSITIVE_NEGATIVE: return UNIGRAM_ANNOTATOR;
+		
 		default: return UNIGRAM_ANNOTATOR; 	
 			
 		}
@@ -66,18 +68,18 @@ public class ExampleApplication {
 				file.delete();
 				file.createNewFile();
 			}
-			// TikaExtraction obj = new TikaExtraction();
-			// obj.extractTextFromRawData();
+			TikaExtraction.extractTextFromRawData(INPUTDIRNAME,EXTRACTEDDIRNAME);
 
 			File extractedDir = null;
             File inputDir = null;
             inputDir = new File(INPUTDIRNAME);
             extractedDir = new File(EXTRACTEDDIRNAME);
-
+            PrintAnnotations.loadPositiveAndNegativeTextToMap();
+        
 
 			System.out
 					.println("Enter the features 1. unigram \n 2. bigram \n 3. trigrsm \n"
-							+ "4.Capitalize \n 5.Senetence \n 6.Punctuation \n 7. url ");
+							+ " 4.Capitalize \n 5.Senetence \n 6.Punctuation \n 7. url \n 8. positive and negative words");
 			Scanner scanner = new Scanner(System.in);
 			String inp = scanner.nextLine();
 			String featureList[] = inp.split(",");
@@ -93,13 +95,13 @@ public class ExampleApplication {
 				XMLInputSource in = new XMLInputSource(taeDescriptor);
 				ResourceSpecifier specifier = UIMAFramework.getXMLParser()
 						.parseResourceSpecifier(in);
-
+				
 				// create Analysis Engine
 				AnalysisEngine ae = UIMAFramework
 						.produceAnalysisEngine(specifier);
 				// create a CAS
 				CAS cas = ae.newCAS();
-				TikaExtraction.extractTextFromRawData(INPUTDIRNAME,EXTRACTEDDIRNAME);
+			
 				
 				File[] files = extractedDir.listFiles();
 				if (files == null) {
@@ -150,6 +152,12 @@ public class ExampleApplication {
 		// String document = FileUtils.file2String(aFile);
 
 		String document = extractor.getDocument(aFile.getName(),classType);
+		
+		if(classType == ClassType.POSITIVE_NEGATIVE){
+			PrintAnnotations.processPosNegCount(document,fileName);
+			aCAS.reset();
+			return;
+		}
 
 		// document = document.trim();
 
