@@ -52,7 +52,7 @@ public class FileExtractor {
 	public String getDocument(String inputTextFile,ClassType classType){
 		StringBuilder builder = null;
 		try {
-			File input = new File("./data/"+inputTextFile);
+			File input = new File("data/"+inputTextFile);
 			sc = new Scanner(input);
 			String line,words[];
 			builder = new StringBuilder();
