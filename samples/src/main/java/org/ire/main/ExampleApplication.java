@@ -14,13 +14,17 @@ import org.ire.util.ClassType;
 import org.ire.util.FileExtractor;
 import org.ire.util.PrintAnnotations;
 
+
 public class ExampleApplication {
 
 	private static final String CAPITALIZE_ANNOTATOR = "analysis_engine/CapitalAnnotator.xml";
 	private static final String UNIGRAM_ANNOTATOR = "analysis_engine/SimpleTokenAndSentenceAnnotator.xml";
-	private static final String BIGRAM_ANNOTATOR ="analysis_engine/SimpleEmailRecognizer_RegEx_TAE.xml";
+	private static final String BIGRAM_ANNOTATOR ="analysis_engine/BigramAnnotator.xml";
+	private static final String PUNCTUATION_ANNOTATOR ="analysis_engine/PunctuationAnnotator.xml";
+	private static final String TRIGRAM_ANNOTATOR ="analysis_engine/TrigramAnnotator.xml";
+	private static final String URL_ANNOTATOR ="analysis_engine/UrlAnnotator.xml";
 	private static FileExtractor extractor;
-
+	
 	public static String getAnnotator(String value) {
 		ClassType input=ClassType.values()[Integer.parseInt(value)];
 		switch(input){
@@ -28,9 +32,15 @@ public class ExampleApplication {
 		
 		case BIGRAM: return BIGRAM_ANNOTATOR;
 		
+		case TRIGRAM: return TRIGRAM_ANNOTATOR;
+		
 		case CAPITALIZE: return CAPITALIZE_ANNOTATOR;
 		
 		case SENTENCECOUNT: return CAPITALIZE_ANNOTATOR;
+		
+		case PUNCTUATION: return PUNCTUATION_ANNOTATOR;
+		
+		case URL: return URL_ANNOTATOR;
 		
 		default: return UNIGRAM_ANNOTATOR; 	
 			
@@ -45,12 +55,17 @@ public class ExampleApplication {
 		try {
 			File taeDescriptor = null;
 			File inputDir = null;
-
+			File dir = new File("token-output");
+			for(File file: dir.listFiles()){
+				file.delete();
+				file.createNewFile();
+			}
 			// TikaExtraction obj = new TikaExtraction();
 			// obj.extractTextFromRawData();
 
 			System.out
-					.println("Enter the features 1. unigram \n 2. bigram \n 3.Capitalize ");
+					.println("Enter the features 1. unigram \n 2. bigram \n 3. trigrsm \n"
+							+ "4.Capitalize \n 5.Senetence \n 6.Punctuation \n 7. url ");
 			Scanner scanner = new Scanner(System.in);
 			String inp = scanner.nextLine();
 			String featureList[] = inp.split(",");
@@ -80,6 +95,7 @@ public class ExampleApplication {
 					System.out.println("No files to process");
 				} else {
 					// process documents
+					
 					for (int i = 0; i < files.length; i++) {
 						if (!files[i].isDirectory()) {
 							System.out.println("--------------"
@@ -90,13 +106,9 @@ public class ExampleApplication {
 				}
 				ae.destroy();
 			}
-			/*System.out.println("----------Uima work completed---------");
+			System.out.println("----------Uima work completed---------");
 
-			ScoreCalculator sc = new ScoreCalculator();
-			sc.process();
-			sc.printResult();
-			sc.printOutPut();*/
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -120,7 +132,7 @@ public class ExampleApplication {
 
 		// String document = FileUtils.file2String(aFile);
 
-		String document = extractor.getDocument(aFile.getName());
+		String document = extractor.getDocument(aFile.getName(),classType);
 
 		// document = document.trim();
 
@@ -129,7 +141,7 @@ public class ExampleApplication {
 
 		// process
 		aAE.process(aCAS);
-
+		
 		// print annotations to System.out
 		PrintAnnotations.printAnnotations(aCAS, aCAS.getAnnotationType(),
 				System.out, fileName,classType);

@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
+import org.ire.uima.tokenizer.Punctuation;
+
 public class FileExtractor {
 	
 	private static final String SPACE = " ";
@@ -35,7 +37,19 @@ public class FileExtractor {
 		sc.close();
 	}
 	
-	public String getDocument(String inputTextFile){
+	public boolean isNotNum(String inp){
+		try  
+		  {  
+		    double d = Double.parseDouble(inp);  
+		  }  
+		  catch(NumberFormatException nfe)  
+		  {  
+		    return true;  
+		  }  
+		  return false;  
+	}
+	
+	public String getDocument(String inputTextFile,ClassType classType){
 		StringBuilder builder = null;
 		try {
 			File input = new File("./data/"+inputTextFile);
@@ -48,9 +62,14 @@ public class FileExtractor {
 				words=line.split(SPACE);
 				for(int i=0;i<words.length;i++){
 					//words[i]=words[i].toLowerCase();
-					if(!stopWordSet.contains(words[i].toLowerCase())){
-						words[i]=words[i].replaceAll("\\W", "");
-						//System.out.print(words[i]+SPACE);;
+					if(!stopWordSet.contains(words[i].toLowerCase()) && isNotNum(words[i])){
+						if(classType != ClassType.PUNCTUATION && classType != ClassType.URL)
+							words[i]=words[i].replaceAll("\\W", "");
+						else{
+							words[i]=words[i].replaceAll("\\s+", "");
+							words[i]=words[i].replaceAll(",", "@");
+						}
+						System.out.print(words[i]+SPACE);;
 						builder.append(words[i]);
 						builder.append(SPACE);
 					}
