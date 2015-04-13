@@ -10,9 +10,11 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.util.XMLInputSource;
+import org.ire.uima.tika.TikaExtraction;
 import org.ire.util.ClassType;
 import org.ire.util.FileExtractor;
 import org.ire.util.PrintAnnotations;
+import org.ire.util.ScoreCalculator;
 
 
 public class ExampleApplication {
@@ -23,6 +25,9 @@ public class ExampleApplication {
 	private static final String PUNCTUATION_ANNOTATOR ="analysis_engine/PunctuationAnnotator.xml";
 	private static final String TRIGRAM_ANNOTATOR ="analysis_engine/TrigramAnnotator.xml";
 	private static final String URL_ANNOTATOR ="analysis_engine/UrlAnnotator.xml";
+	private static final String SENTENCE_ANNOTATOR ="analysis_engine/SimpleEmailRecognizer_RegEx_TAE.xml";
+	private static final String INPUTDIRNAME="rawdata";
+	private static final String EXTRACTEDDIRNAME="data";
 	private static FileExtractor extractor;
 	
 	public static String getAnnotator(String value) {
@@ -36,7 +41,7 @@ public class ExampleApplication {
 		
 		case CAPITALIZE: return CAPITALIZE_ANNOTATOR;
 		
-		case SENTENCECOUNT: return CAPITALIZE_ANNOTATOR;
+		case SENTENCECOUNT: return SENTENCE_ANNOTATOR;
 		
 		case PUNCTUATION: return PUNCTUATION_ANNOTATOR;
 		
@@ -54,7 +59,8 @@ public class ExampleApplication {
 	public static void main(String[] args) {
 		try {
 			File taeDescriptor = null;
-			File inputDir = null;
+
+			//File inputDir = null;
 			File dir = new File("token-output");
 			for(File file: dir.listFiles()){
 				file.delete();
@@ -63,6 +69,12 @@ public class ExampleApplication {
 			// TikaExtraction obj = new TikaExtraction();
 			// obj.extractTextFromRawData();
 
+			File extractedDir = null;
+            File inputDir = null;
+            inputDir = new File(INPUTDIRNAME);
+            extractedDir = new File(EXTRACTEDDIRNAME);
+
+
 			System.out
 					.println("Enter the features 1. unigram \n 2. bigram \n 3. trigrsm \n"
 							+ "4.Capitalize \n 5.Senetence \n 6.Punctuation \n 7. url ");
@@ -70,14 +82,13 @@ public class ExampleApplication {
 			String inp = scanner.nextLine();
 			String featureList[] = inp.split(",");
 			extractor = new FileExtractor();
-			for (String feature : featureList) {
+			for (String feature1 : featureList) {
 
-				String annotator = getAnnotator(feature);
-				ClassType featureClass = getClassType(feature);
+				String annotator = getAnnotator(feature1);
+				ClassType featureClass = getClassType(feature1);
 				System.out.println(annotator);
 				taeDescriptor = new File(annotator);
-				// CAPITALIZE_ANNOTATOR);
-				inputDir = new File("data");
+								
 				// get Resource Specifier from XML file
 				XMLInputSource in = new XMLInputSource(taeDescriptor);
 				ResourceSpecifier specifier = UIMAFramework.getXMLParser()
@@ -88,25 +99,31 @@ public class ExampleApplication {
 						.produceAnalysisEngine(specifier);
 				// create a CAS
 				CAS cas = ae.newCAS();
-
-				// get all files in the input directory
-				File[] files = inputDir.listFiles();
+				TikaExtraction.extractTextFromRawData(INPUTDIRNAME,EXTRACTEDDIRNAME);
+				
+				File[] files = extractedDir.listFiles();
 				if (files == null) {
 					System.out.println("No files to process");
 				} else {
-					// process documents
-					
+					 //converting documents
+
 					for (int i = 0; i < files.length; i++) {
 						if (!files[i].isDirectory()) {
-							System.out.println("--------------"
-									+ files[i].getName() + "----------");
+						   
 							processFile(files[i], ae, cas,featureClass);
 						}
 					}
 				}
 				ae.destroy();
 			}
+
 			System.out.println("----------Uima work completed---------");
+
+			ScoreCalculator sc = new ScoreCalculator();
+			sc.process();
+			sc.printMatrix();
+			sc.close();
+
 
 			
 		} catch (Exception e) {

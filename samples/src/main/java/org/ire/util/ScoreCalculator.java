@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
+import org.ire.uima.tika.TikaExtraction;
+
 public class ScoreCalculator {
 	private TreeMap<String, HashMap<String, Integer>> wordSet;
 	private static final String OUTPUT_PATH = "wordScore/word.txt";
@@ -130,7 +132,11 @@ public class ScoreCalculator {
 		mat[0][0]="FileNames";
 		int row=1;
 		for (String file : fileNames) {
-			mat[row][0]=file;
+
+			//mat[row][0]=file;
+
+			mat[row][0]=TikaExtraction.getConvertedFileMap().get(file);
+
 			row++;
 		}
 		int col=1;
@@ -146,7 +152,11 @@ public class ScoreCalculator {
 				.entrySet()) {
 			
 			for (String file : fileNames) {
-				int rownum=getFileNameRowFromMatrix(mat,file);
+
+				//int rownum=getFileNameRowFromMatrix(mat,file);
+
+				int rownum=getFileNameRowFromMatrix(mat,TikaExtraction.getConvertedFileMap().get(file),rowsize);
+
 				if (entry.getValue().containsKey(file)) {
 					mat[rownum][col]=entry.getValue().get(file)+"";
 				} else
@@ -175,8 +185,9 @@ public class ScoreCalculator {
 		}
 	}
 
-	private int getFileNameRowFromMatrix(String[][] mat, String file) {
-		for(int i=1;i<100;i++){
+	private int getFileNameRowFromMatrix(String[][] mat, String file,int row) {
+		for(int i=1;i<row;i++){
+
 			if(mat[i][0].equalsIgnoreCase(file)){
 				return i;
 			}
@@ -188,10 +199,4 @@ public class ScoreCalculator {
 		pr.close();
 	}
 
-	public static void main(String[] args) {
-		ScoreCalculator sc = new ScoreCalculator();
-		sc.process();
-		sc.printMatrix();
-		sc.close();
-	}
 }

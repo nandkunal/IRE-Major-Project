@@ -41,7 +41,12 @@ import org.apache.uima.cas.text.AnnotationFS;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.util.FileUtils;
 import org.apache.uima.util.XMLInputSource;
+import org.ire.main.ExampleApplication;
+import org.ire.uima.tokenizer.Bigram;
 import org.ire.uima.tokenizer.Capital;
+import org.ire.uima.tokenizer.Punctuation;
+import org.ire.uima.tokenizer.Trigram;
+import org.ire.uima.tokenizer.URL;
 import org.ire.uima.tokenizer.WordAnnot;
 
 /**
@@ -52,6 +57,8 @@ import org.ire.uima.tokenizer.WordAnnot;
  * 
  */
 public class PrintAnnotations {
+	public static boolean isFirst = true;
+
 
 	/**
 	 * Prints all Annotations to a PrintStream.
@@ -94,9 +101,14 @@ public class PrintAnnotations {
 		// int i=0;
 		try {
 			System.out.println(fileName);
+			//System.out.println("write");
 			File f = new File("token-output/" + fileName);
-			fw = new FileWriter(f);
+			fw = new FileWriter(f,true);
+			/*if(isFirst){
+				System.out.println("wowowowowo");
 			fw.write(fileName);
+			isFirst=false;
+			}*/
 			fw.write("\n");
 			StringBuilder content = new StringBuilder();
 			while (iter.isValid()) {
@@ -263,12 +275,26 @@ public class PrintAnnotations {
 		String coveredText = null;
 		if (aFS instanceof AnnotationFS) {
 			AnnotationFS annot = (AnnotationFS) aFS;
-			if (ClassType.UNIGRAM==classType && annot instanceof WordAnnot) { //Capital
+			if (ClassType.UNIGRAM==classType && annot instanceof WordAnnot) { 
 				coveredText = annot.getCoveredText();
-			}else if(ClassType.CAPITALIZE==classType && annot instanceof Capital) { //Capital
+			}else if(ClassType.CAPITALIZE==classType && annot instanceof Capital) { 
+				//System.out.println("capital");
+				coveredText = annot.getCoveredText();
+			}else if(ClassType.BIGRAM==classType && annot instanceof Bigram) { 
+				//System.out.println("capital");
+				coveredText = annot.getCoveredText();
+			}else if(ClassType.PUNCTUATION==classType && annot instanceof Punctuation) { 
+				//System.out.println("capital");
+				coveredText = annot.getCoveredText();
+			}else if(ClassType.TRIGRAM==classType && annot instanceof Trigram) { 
+				//System.out.println("capital");
+				coveredText = annot.getCoveredText();
+			}else if(ClassType.URL==classType && annot instanceof URL) { 
 				//System.out.println("capital");
 				coveredText = annot.getCoveredText();
 			}
+			
+			
 		}
 		return coveredText;
 
@@ -285,62 +311,6 @@ public class PrintAnnotations {
 	private static void printTabs(int aNumTabs, PrintStream aOut) {
 		for (int i = 0; i < aNumTabs; i++) {
 			aOut.print("\t");
-		}
-	}
-
-	/**
-	 * Main program for testing this class. Ther are two required arguments -
-	 * the path to the XML descriptor for the TAE to run and an input file.
-	 * Additional arguments are Type or Feature names to be included in the
-	 * ResultSpecification passed to the TAE.
-	 */
-	public static void main(String[] args) {
-		try {
-			File taeDescriptor = new File(args[0]);
-			File inputFile = new File(args[1]);
-
-			// get Resource Specifier from XML file or TEAR
-			XMLInputSource in = new XMLInputSource(taeDescriptor);
-			ResourceSpecifier specifier = UIMAFramework.getXMLParser()
-					.parseResourceSpecifier(in);
-
-			// create Analysis Engine
-			AnalysisEngine ae = UIMAFramework.produceAnalysisEngine(specifier);
-			// create a CAS
-			CAS cas = ae.newCAS();
-
-			// build ResultSpec if Type and Feature names were specified on
-			// commandline
-			ResultSpecification resultSpec = null;
-			if (args.length > 2) {
-				resultSpec = ae.createResultSpecification(cas.getTypeSystem());
-				for (int i = 2; i < args.length; i++) {
-					if (args[i].indexOf(':') > 0) // feature name
-					{
-						resultSpec.addResultFeature(args[i]);
-					} else {
-						resultSpec.addResultType(args[i], false);
-					}
-				}
-			}
-
-			// read contents of file
-			String document = FileUtils.file2String(inputFile);
-
-			// send doc through the AE
-			cas.setDocumentText(document);
-			ae.process(cas, resultSpec);
-
-			// print results
-			Type annotationType = cas.getTypeSystem().getType(
-					CAS.TYPE_NAME_ANNOTATION);
-			// PrintAnnotations.printAnnotations(cas, annotationType,
-			// System.out);
-
-			// destroy AE
-			ae.destroy();
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 
