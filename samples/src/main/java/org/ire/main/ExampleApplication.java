@@ -1,7 +1,9 @@
 package org.ire.main;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 import org.apache.uima.UIMAFramework;
@@ -15,6 +17,8 @@ import org.ire.util.ClassType;
 import org.ire.util.FileExtractor;
 import org.ire.util.PrintAnnotations;
 import org.ire.util.ScoreCalculator;
+import org.ire.weka.ClusterKmean;
+import org.ire.weka.WekaMatrix;
 
 
 public class ExampleApplication {
@@ -78,7 +82,7 @@ public class ExampleApplication {
         
 
 			System.out
-					.println("Enter the features 1. unigram \n 2. bigram \n 3. trigrsm \n"
+					.println("Enter the features 1. unigram \n 2. bigram \n 3. trigram \n"
 							+ " 4.Capitalize \n 5.Senetence \n 6.Punctuation \n 7. url \n 8. positive and negative words");
 			Scanner scanner = new Scanner(System.in);
 			String inp = scanner.nextLine();
@@ -125,7 +129,18 @@ public class ExampleApplication {
 			sc.process();
 			sc.printMatrix();
 			sc.close();
-
+			System.out.println("----------Score calculation completed---------");
+			WekaMatrix.calculateMatrix();
+			System.out.println("----------Cluster Analysis completed---------");
+			System.out.println("enter number of cluster and seed");
+			BufferedReader obj = new BufferedReader(
+					new InputStreamReader(System.in));
+			String inp1 = obj.readLine();
+			String inp2[]=inp1.split(" ");
+			int k = Integer.parseInt(inp2[0]);
+			int seed = Integer.parseInt(inp2[1]);
+			ClusterKmean.clusterDoc(k, seed);
+			ClusterKmean.clusterOriginalDoc(k, seed);
 
 			
 		} catch (Exception e) {
