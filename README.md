@@ -6,6 +6,7 @@ Information Retrieval and Extraction [CSE474]
 Document clustering, Feature aggregation & Visualization
 
 How To Run:
+Part1: Clustering
   1. Download the project
   2. import the project into eclipse as maven project
   3. put all the file set which needs to be clustered into rawdata folder inside the project
@@ -14,6 +15,8 @@ How To Run:
   6. Select the number of clusters and seeds
   7. Press Submit and wait for the popup for Completion message
   8. Go To outputRaw to see the documents clustered.
+Part2: Visualization
+  
    
 
 Project Scope 
