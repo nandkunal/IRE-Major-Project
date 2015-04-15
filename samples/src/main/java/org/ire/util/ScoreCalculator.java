@@ -15,8 +15,9 @@ import org.ire.uima.tika.TikaExtraction;
 public class ScoreCalculator {
 	private TreeMap<String, HashMap<String, Integer>> wordSet;
 	private static final String OUTPUT_PATH = "wordScore/word.txt";
+	private static final String OUTPUT_PATH1 = "wordScore/word1.txt";
 	private static final String INPUTFOLDER = "token-output";
-	private PrintWriter pr;
+	private PrintWriter pr,pr1;
 	private List<String> fileNames;
 
 	public ScoreCalculator() {
@@ -24,6 +25,7 @@ public class ScoreCalculator {
 		fileNames = new ArrayList<String>();
 		try {
 			pr = new PrintWriter(new File(OUTPUT_PATH));
+			pr1 = new PrintWriter(new File(OUTPUT_PATH1));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -48,12 +50,12 @@ public class ScoreCalculator {
 				actualFileName = sc.nextLine();
 				fileNames.add(actualFileName);
 			}
-			if (sc.hasNext())
+			while (sc.hasNext()){
 				data = sc.nextLine();
 			if (data != null) {
 				String dataWord[] = data.split(",");
 				HashMap<String, Integer> temp;
-				for (int i = 0; i < dataWord.length; i++) {
+				for (int i = 1; i < dataWord.length; i++) {
 					// System.out.println(dataWord[i]);
 					if (wordSet.containsKey(dataWord[i])) {
 						if (wordSet.get(dataWord[i])
@@ -72,6 +74,7 @@ public class ScoreCalculator {
 						wordSet.put(dataWord[i], value);
 					}
 				}
+			  }
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

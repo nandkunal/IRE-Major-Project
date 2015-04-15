@@ -30,6 +30,7 @@ public class ExampleApplication {
 	private static final String TRIGRAM_ANNOTATOR ="analysis_engine/TrigramAnnotator.xml";
 	private static final String URL_ANNOTATOR ="analysis_engine/UrlAnnotator.xml";
 	private static final String SENTENCE_ANNOTATOR ="analysis_engine/SimpleEmailRecognizer_RegEx_TAE.xml";
+	private static final String POS_ANNOTATOR ="analysis_engine/POSAnnotator.xml";
 	private static final String INPUTDIRNAME="rawdata";
 	private static final String EXTRACTEDDIRNAME="data";
 	private static FileExtractor extractor;
@@ -53,6 +54,7 @@ public class ExampleApplication {
 		
 		case POSITIVE_NEGATIVE: return UNIGRAM_ANNOTATOR;
 		
+		case LENGTH_OF_DOC: return UNIGRAM_ANNOTATOR;
 		default: return UNIGRAM_ANNOTATOR; 	
 			
 		}
@@ -171,10 +173,9 @@ public class ExampleApplication {
 
 		String document = extractor.getDocument(aFile.getName(),classType);
 		
-		if(classType == ClassType.POSITIVE_NEGATIVE){
-			PrintAnnotations.processPosNegCount(document,fileName);
-			aCAS.reset();
-			return;
+		
+		if(classType == ClassType.LENGTH_OF_DOC){
+			classType = ClassType.UNIGRAM;
 		}
 
 		// document = document.trim();

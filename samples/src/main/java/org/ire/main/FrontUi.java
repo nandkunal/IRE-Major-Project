@@ -66,7 +66,13 @@ public class FrontUi extends JPanel {
 			p.add(features[i]);
 			fieldPanel.add(p);
 		}
-		JLabel lab = new JLabel("    Cluster Count", JLabel.LEFT);
+		
+		JLabel lab = new JLabel(" -------------------------------", JLabel.LEFT);
+		JLabel lab2 = new JLabel(" -----------------------------", JLabel.RIGHT);
+		labelPanel.add(lab);
+		fieldPanel.add(lab2);
+		
+		lab = new JLabel("    Cluster Count", JLabel.LEFT);
 		lab.setLabelFor(cluster);
 		labelPanel.add(lab);
 		JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -88,11 +94,11 @@ public class FrontUi extends JPanel {
 	public static void main(String[] args) {
 		String[] labels = { "    Unigram", "    Bigram", "    Trigram",
 				"    Capitalize", "    Senetence count", "    Punctuation",
-				"    Url", "    positive and negative words" };
+				"    Url", "    positive and negative words","    Document length" };
 
 		String[] descs = { "Unigram", "Bigram", "Trigram", "Capitalize",
 				"Senetence count", "Punctuation", "Url",
-				"positive and negative words" };
+				"positive and negative words","Document length" };
 
 		final FrontUi form = new FrontUi(labels, descs);
 

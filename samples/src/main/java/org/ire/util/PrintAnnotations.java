@@ -123,7 +123,7 @@ public class PrintAnnotations {
 			// System.out.println("write");
 			File f = new File("token-output/" + fileName);
 			fw = new FileWriter(f, true);
-			fw.write("\nPOSNEG" + ",");
+			fw.write("\n POSITIVE_NEGATIVE" + ",");
 			StringBuilder content = new StringBuilder();
 			StringTokenizer t = new StringTokenizer(input, " \n\t");
 			String word;
@@ -138,6 +138,42 @@ public class PrintAnnotations {
 					// System.out.println("negative:"+word);
 					content.append("N" + ",");
 				}
+			}
+			if (content.toString().length() > 0)
+				fw.write(content.toString().substring(0,
+						content.toString().length() - 1));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				fw.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+	
+	/**
+	 * Function to handle postive and negative word count
+	 */
+	public static void processDOCLENGTHCount(String input, String fileName) {
+		FileWriter fw = null;
+		// int i=0;
+		try {
+			System.out.println(fileName);
+			// System.out.println("write");
+			File f = new File("token-output/" + fileName);
+			fw = new FileWriter(f, true);
+			fw.write("\n LENGTH_OF_DOC" + ",");
+			StringBuilder content = new StringBuilder();
+			StringTokenizer t = new StringTokenizer(input, " \n\t");
+			String word;
+			while (t.hasMoreTokens()) {
+				word = t.nextToken();
+				
+					content.append("doclen" + ",");
+				
 			}
 			if (content.toString().length() > 0)
 				fw.write(content.toString().substring(0,
