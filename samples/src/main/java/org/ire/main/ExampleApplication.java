@@ -29,7 +29,7 @@ public class ExampleApplication {
 	private static final String PUNCTUATION_ANNOTATOR ="analysis_engine/PunctuationAnnotator.xml";
 	private static final String TRIGRAM_ANNOTATOR ="analysis_engine/TrigramAnnotator.xml";
 	private static final String URL_ANNOTATOR ="analysis_engine/UrlAnnotator.xml";
-	private static final String SENTENCE_ANNOTATOR ="analysis_engine/SimpleEmailRecognizer_RegEx_TAE.xml";
+	private static final String SENTENCE_ANNOTATOR ="analysis_engine/DocCountAnnotator.xml";
 	private static final String POS_ANNOTATOR ="analysis_engine/POSAnnotator.xml";
 	private static final String INPUTDIRNAME="rawdata";
 	private static final String EXTRACTEDDIRNAME="data";

@@ -42,6 +42,8 @@ import org.apache.uima.cas.Type;
 import org.apache.uima.cas.text.AnnotationFS;
 import org.ire.uima.tokenizer.Bigram;
 import org.ire.uima.tokenizer.Capital;
+import org.ire.uima.tokenizer.DocCount;
+import org.ire.uima.tokenizer.POS;
 import org.ire.uima.tokenizer.Punctuation;
 import org.ire.uima.tokenizer.Trigram;
 import org.ire.uima.tokenizer.URL;
@@ -398,6 +400,12 @@ public class PrintAnnotations {
 				// System.out.println("capital");
 				coveredText = annot.getCoveredText();
 			} else if (ClassType.URL == classType && annot instanceof URL) {
+				// System.out.println("capital");
+				coveredText = annot.getCoveredText();
+			}else if (ClassType.SENTENCECOUNT == classType && annot instanceof DocCount) {
+				// System.out.println("capital");
+				coveredText = annot.getCoveredText();
+			}else if (ClassType.POSITIVE_NEGATIVE == classType && annot instanceof POS) {
 				// System.out.println("capital");
 				coveredText = annot.getCoveredText();
 			}
