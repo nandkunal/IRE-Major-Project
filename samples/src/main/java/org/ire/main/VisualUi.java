@@ -122,10 +122,10 @@ public class VisualUi extends JPanel {
 
 					}
 				}
-				String args[] = {};
 				if (form.wordcloud.isSelected()) {
 					isWorldCloud = true;
-					WordCount.ivoke("cluster0", args);
+					System.out.println("cluster"+clusterno);
+					WordCount.ivoke("cluster"+clusterno, null);
 				}
 
 				if (form.bargraph.isSelected()) {
