@@ -86,8 +86,8 @@ public class WordCount {
 		}
 		// get cutoff and report frequencies
 		System.out.println("Total words = " + wordCounts.size());
-		System.out.print("Minimum number of occurrences for printing? ");
-		int min = console.nextInt();
+		//System.out.print("Minimum number of occurrences for printing? ");
+		int min = 1;//console.nextInt();TODO:Need to make dynamic
 		File file = new File("wordScore/WordFrequency.txt");
 		if (!file.exists())
 			file.createNewFile();
