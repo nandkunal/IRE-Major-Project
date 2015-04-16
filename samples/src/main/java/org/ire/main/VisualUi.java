@@ -128,7 +128,7 @@ public class VisualUi extends JPanel {
 					System.out.println("clusterno is " + WordCount.clusternum);
 					Runnable generateCloud = new Runnable() {
 						public void run() {
-							WordCount.invoke("cluster0", null);
+							WordCount.invoke("cluster"+WordCount.clusternum , null);
 							
 						}
 					};
