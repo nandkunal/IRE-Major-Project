@@ -17,6 +17,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import org.ire.visualization.WordCount;
+
 public class VisualUi extends JPanel {
 
 	public JRadioButton[] features;
@@ -120,8 +122,10 @@ public class VisualUi extends JPanel {
 
 					}
 				}
+				String args[] = {};
 				if (form.wordcloud.isSelected()) {
 					isWorldCloud = true;
+					WordCount.ivoke("cluster0", args);
 				}
 
 				if (form.bargraph.isSelected()) {
