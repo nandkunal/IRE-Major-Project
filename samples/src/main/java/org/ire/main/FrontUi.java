@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -24,6 +26,9 @@ public class FrontUi extends JPanel {
 	public JTextField cluster, seed;
 	public boolean checkedFields[];
 	public String selected;
+	public static String featuresList[] = { "dd", "UNIGRAM", "BIGRAM",
+		"TRIGRAM", "CAPITALIZE", "SENTENCECOUNT", "PUNCTUATION", "URL",
+		"POSITIVE_NEGATIVE", "LENGTH_OF_DOC" };
 
 	// Create a form with the specified labels, tooltips, and sizes.
 	public FrontUi(String[] labels, String[] tips) {
@@ -92,7 +97,7 @@ public class FrontUi extends JPanel {
 	}
 
 	public static void main(String[] args) {
-		String[] labels = { "    Unigram", "    Bigram", "    Trigram",
+		final String[]  labels = { "    Unigram", "    Bigram", "    Trigram",
 				"    Capitalize", "    Senetence count", "    Punctuation",
 				"    Url", "    positive and negative words","    Document length" };
 
@@ -155,7 +160,13 @@ public class FrontUi extends JPanel {
 											"Confirm", dialogButton1);
 							if (dialogResult1 == JOptionPane.YES_OPTION) {
 								System.out.println(form.selected);
-								VisualUi.analyseResult(clusterCount);
+								List<String> curfeatureList = new ArrayList<String>();
+								for(int i=0;i<labels.length;i++ ){
+								  if(form.checkedFields[i]){
+									  curfeatureList.add(featuresList[i+1].toLowerCase());
+								  }
+								}
+								VisualUi.analyseResult(clusterCount,curfeatureList.toArray(new String[curfeatureList.size()]));
 							}
 							
 						}else{

@@ -13,8 +13,9 @@ import org.tagcloud.TagCloud;
 public class WordCount {
 	private static final String STOPWORD = "resources/stopwords.txt";
 	private static Set<String> stopWordSet;
-	private Scanner sc;
-	public WordCount(){
+	private static Scanner sc;
+	public static int clusternum =0;
+	public static void WordCountinit(){
 		stopWordSet = new HashSet<String>();
 		System.out.println("Loading Stopwords..");
 		try {
@@ -101,15 +102,30 @@ public class WordCount {
 			//System.out.println(count + "\t" + word);
 		}
 		writer.close();
+		console.close();
 	} 
-  public static void ivoke(String clusterName,String[] args) {
+  public static void invoke(String clusterName,String[] args) {
 	try {
-		new WordCount().init(clusterName);
-		TagCloud wordCloud = new TagCloud();
-		wordCloud.main(args);
+		WordCountinit();
+		init(clusterName);
+		//TagCloud wordCloud = new TagCloud();
+		//wordCloud.main(args);
+		TagCloud.main(args);
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 }
+  public static void main(String[] args) {
+	    //clusternum=0;
+	 	invoke("cluster0", null);
+	 	System.out.println("cluster haha"+clusternum);
+	}
+  
+  public static boolean generate() {
+	    //clusternum=0;
+	 	invoke("cluster0", null);
+	 	System.out.println("cluster haha"+clusternum);
+	 	return true;
+	}
 }

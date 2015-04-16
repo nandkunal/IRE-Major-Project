@@ -23,12 +23,8 @@ public class CreateBarGraph{
 		return sortedMap;
 	}
 	
-	public static void main(String[] args) throws IOException {
+	public static void init(String[] clusterNumbers,String[] featureArr) throws IOException {
 		
-		Scanner console = new Scanner(System.in);
-		System.out.println("Select Clusters for Bar graphs(Space Seperated): ");
-		clusterInput = console.nextLine().toLowerCase();
-		String[] clusterNumbers = clusterInput.split(" ");
 		
 		Map<String, Integer> clusterFiles = new HashMap<String, Integer>();
 		for (String clusterName: clusterNumbers) {
@@ -43,10 +39,8 @@ public class CreateBarGraph{
 				}
 			}
 		}
-		System.out.println("Enter the features you want to display(Space Seperated):");
-		featureName = console.nextLine().toLowerCase();
-		String[] featureArr = featureName.split(" ");
-		System.out.println(featureArr[0]);
+		
+	
 		/*for (int i = 0;i < featureArr.length;i++) {
 			if (!featureList.containsKey(featureArr[i])) {
 				featureList.put(featureArr[i], 1);
@@ -74,8 +68,8 @@ public class CreateBarGraph{
 					while (input.hasNext()) {
 						String nextFeature = input.nextLine().toLowerCase();
 						String[] wordList = nextFeature.split(",");
-						//System.out.println(wordList[0]);
-						//System.out.println(featureArr[k]);
+						System.out.println(wordList[0]);
+						System.out.println(featureArr[k]);
 						if (wordList[0].equals(featureArr[k])) {
 							System.out.println("yes");
 							for (int j = 1;j < wordList.length;j++) {
@@ -91,7 +85,7 @@ public class CreateBarGraph{
 					}
 				}
 				else
-					System.out.println("hereinstead");
+					System.out.println("File not found");
 			}
 			System.out.println("Total words = " + wordFrequency.size());
 			TreeMap<String, Integer> sortedMap = SortByValue(wordFrequency);

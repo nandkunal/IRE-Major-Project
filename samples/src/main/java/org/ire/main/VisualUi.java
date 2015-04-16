@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.IOException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -17,6 +18,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import org.ire.visualization.BarChart_AWT;
+import org.ire.visualization.CreateBarGraph;
 import org.ire.visualization.WordCount;
 
 public class VisualUi extends JPanel {
@@ -30,6 +33,7 @@ public class VisualUi extends JPanel {
 	public static int clusterno = -1;
 	public static boolean isWorldCloud = false;
 	public static boolean isBarGraph = false;
+	
 
 	// Create a form with the specified labels, tooltips, and sizes.
 	public VisualUi(String[] labels) {
@@ -92,11 +96,75 @@ public class VisualUi extends JPanel {
 		return (features[i].getText());
 	}
 
-	public static void analyseResult(int clusterCount) {
-		JOptionPane.showMessageDialog(null, "Things will run properly");
+	public static void analyseResult(int num, final String[] featureList) {
+		String[] labels = new String[num];
+		// { "   cluster0","   cluster1","   cluster2", };
+
+		for (int i = 0; i < num; i++) {
+			labels[i] = "   cluster" + i;
+		}
+
+		final VisualUi form = new VisualUi(labels);
+
+		JButton submit = new JButton("Get Graph");
+
+		submit.addActionListener(new ActionListener() {
+			final boolean[] cfields = form.checkedFields;
+
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Selected fields : ");
+
+				for (int i = 0; i < cfields.length; i++) {
+					if (cfields[i]) {
+						clusterno = i;
+
+					}
+				}
+				if (form.wordcloud.isSelected()) {
+					isWorldCloud = true;
+					System.out.println("cluster" + clusterno);
+
+					WordCount.clusternum = clusterno;
+					System.out.println("clusterno is " + WordCount.clusternum);
+					Runnable generateCloud = new Runnable() {
+						public void run() {
+							WordCount.invoke("cluster0", null);
+							
+						}
+					};
+					
+					new Thread(generateCloud).start();
+				}
+
+				if (form.bargraph.isSelected()) {
+
+					isBarGraph = true;
+					String clusterNumbers[] = { "cluster"+clusterno };
+										
+					try {
+						CreateBarGraph.init(clusterNumbers, featureList);
+						BarChart_AWT.main(null);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+
+			}
+		});
+
+		JFrame f = new JFrame("Document clustering");
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.getContentPane().add(form, BorderLayout.NORTH);
+		JPanel p = new JPanel();
+		p.add(submit);
+		f.getContentPane().add(p, BorderLayout.SOUTH);
+		f.pack();
+		f.setVisible(true);
+
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(final String[] args) {
 		int num = 5;
 
 		String[] labels = new String[num];
@@ -124,13 +192,35 @@ public class VisualUi extends JPanel {
 				}
 				if (form.wordcloud.isSelected()) {
 					isWorldCloud = true;
-					System.out.println("cluster"+clusterno);
-					WordCount.ivoke("cluster"+clusterno, null);
-				}
+					System.out.println("cluster" + clusterno);
 
+					WordCount.clusternum = clusterno;
+					System.out.println("clusterno is " + WordCount.clusternum);
+					
+					// WordCount.invoke(inp, null);
+					Runnable generateCloud = new Runnable() {
+						public void run() {
+							WordCount.invoke("cluster0", null);
+							
+						}
+					};
+					
+					new Thread(generateCloud).start();
+				}
+                
 				if (form.bargraph.isSelected()) {
 
 					isBarGraph = true;
+					
+					try {
+						String clusterNumbers[] = { "cluster0"};
+						String featureList[] = { "unigram","bigram"};
+						CreateBarGraph.init(clusterNumbers,featureList );
+						BarChart_AWT.main(null);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 
 			}
@@ -144,5 +234,5 @@ public class VisualUi extends JPanel {
 		f.getContentPane().add(p, BorderLayout.SOUTH);
 		f.pack();
 		f.setVisible(true);
-	}
+	}*/
 }
