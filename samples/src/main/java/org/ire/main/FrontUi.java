@@ -147,6 +147,17 @@ public class FrontUi extends JPanel {
 						System.out.println(form.selected);
 						if(ExampleApplication.run(form.selected, clusterCount, seedCount)){
 							JOptionPane.showMessageDialog(null, "Document Clustering Is successfull Check the cluster in output folder");
+							int dialogButton1 = JOptionPane.YES_NO_OPTION;
+							int dialogResult1 = JOptionPane
+									.showConfirmDialog(
+											null,
+											"Would You Like Visualize the cluster?",
+											"Confirm", dialogButton1);
+							if (dialogResult1 == JOptionPane.YES_OPTION) {
+								System.out.println(form.selected);
+								VisualUi.analyseResult(clusterCount);
+							}
+							
 						}else{
 							JOptionPane.showMessageDialog(null, "Error in clustering please check the logs for more details");
 						}
