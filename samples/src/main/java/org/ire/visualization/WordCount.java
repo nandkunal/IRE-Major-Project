@@ -30,12 +30,12 @@ public class WordCount {
 		}
 		sc.close();
 	}
-	public static void init() throws IOException{
+	public static void init(String clusterName) throws IOException{
 		// open the file
 		Scanner console = new Scanner(System.in);
 		Map<String, Integer> wordCounts = new TreeMap<String, Integer>();
-		System.out.print("What are the names of the folders? ");
-		String fileName = console.nextLine();
+		
+		String fileName = clusterName;
 		String[] listFiles = fileName.split(" ");
 		for (String folders : listFiles) {
 			File dir = new File("output/"+folders);
@@ -86,8 +86,8 @@ public class WordCount {
 		}
 		// get cutoff and report frequencies
 		System.out.println("Total words = " + wordCounts.size());
-		System.out.print("Minimum number of occurrences for printing? ");
-		int min = console.nextInt();
+		//System.out.print("Minimum number of occurrences for printing? ");
+		int min = 1;//console.nextInt();TODO:Need to make dynamic
 		File file = new File("wordScore/WordFrequency.txt");
 		if (!file.exists())
 			file.createNewFile();
@@ -102,9 +102,9 @@ public class WordCount {
 		}
 		writer.close();
 	} 
-  public static void ivoke(String[] args) {
+  public static void ivoke(String clusterName,String[] args) {
 	try {
-		new WordCount().init();
+		new WordCount().init(clusterName);
 		TagCloud wordCloud = new TagCloud();
 		wordCloud.main(args);
 	} catch (IOException e) {
