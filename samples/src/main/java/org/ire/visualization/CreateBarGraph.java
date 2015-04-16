@@ -23,12 +23,8 @@ public class CreateBarGraph{
 		return sortedMap;
 	}
 	
-	public static void main(String[] args) throws IOException {
+	public static void init(String[] clusterNumbers,String[] featureArr) throws IOException {
 		
-		Scanner console = new Scanner(System.in);
-		System.out.println("Select Clusters for Bar graphs(Space Seperated): ");
-		clusterInput = console.nextLine().toLowerCase();
-		String[] clusterNumbers = clusterInput.split(" ");
 		
 		Map<String, Integer> clusterFiles = new HashMap<String, Integer>();
 		for (String clusterName: clusterNumbers) {
@@ -43,10 +39,8 @@ public class CreateBarGraph{
 				}
 			}
 		}
-		System.out.println("Enter the features you want to display(Space Seperated):");
-		featureName = console.nextLine().toLowerCase();
-		String[] featureArr = featureName.split(" ");
-		System.out.println(featureArr[0]);
+		
+	
 		/*for (int i = 0;i < featureArr.length;i++) {
 			if (!featureList.containsKey(featureArr[i])) {
 				featureList.put(featureArr[i], 1);
