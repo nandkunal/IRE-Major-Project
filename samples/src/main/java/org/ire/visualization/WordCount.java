@@ -8,6 +8,8 @@ import java.util.*;
 import java.io.*;
 //import java.
 
+import org.tagcloud.TagCloud;
+
 public class WordCount {
 	private static final String STOPWORD = "resources/stopwords.txt";
 	private static Set<String> stopWordSet;
@@ -100,9 +102,11 @@ public class WordCount {
 		}
 		writer.close();
 	} 
-  public static void main(String[] args) {
+  public static void ivoke(String[] args) {
 	try {
 		new WordCount().init();
+		TagCloud wordCloud = new TagCloud();
+		wordCloud.main(args);
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
