@@ -38,13 +38,20 @@ Part1: Clustering
   
 
 Part2: Visualization
+
  1.In the UI that comes up for Running the Clustering Part, after clustering is completed the user gets a Confirmation dialogue
  asking "Would you like to Visualize the Cluster?"
+ 
  2.On pressing Yes Option to Select either "Bar Graph" or "Word Cloud" on left side of Pane. Select the appropriate one and click "Get Graph". You can see the Visualisation of all the Custers.
    
 
 Project Scope 
 
+This project is mainly focused on feature identification, clustering and visualization of the set of documents. This will be divided into three phases namely.
+- Feature Identification and Listing
+- Document clustering
+- Visualization of the clusters on bargraph and word cloud for analysis.
+Towards the end the project is integrated with an User Interface and feature selection through user.
 
 
 Mentor: Nikhil Priyatam
