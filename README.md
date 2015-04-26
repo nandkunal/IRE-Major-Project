@@ -9,13 +9,21 @@ Document clustering, Feature aggregation & Visualization
 Set Up:
 
 1.Clone the Project into your local disk using the command git clone https://github.com/nandkunal/IRE-Major-Project.git
+
 2.Open Eclipse and Right Click on the Project Pane, Select Import  and Choose Maven Project.
+
 3.Browse to samples directory, pom.xml should be visible for selection.
+
 4.Click Ok
+
 5.Maven will start downloading the dependencies(Note: Make sure to add proxy settings if you are connected to internet via proxy)
+
 6.After all dependencies is resolved, right-click on pom.xml,Run As and Click Maven Clean.Build SUCEESS message should be shown in the console
+
 7.Now Right Click pom.xml, Run as Maven Build and Enter below in Goals Field:clean compile
+
 8.Click ok and Maven should compile all the classes.
+
 
 How To Run:
 Part1: Clustering
