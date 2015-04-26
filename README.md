@@ -35,8 +35,12 @@ Part1: Clustering
   6. Select the number of clusters and seeds
   7. Press Submit and wait for the popup for Completion message
   8. Go To outputRaw to see the documents clustered.
-Part2: Visualization
   
+
+Part2: Visualization
+ 1.In the UI that comes up for Running the Clustering Part, after clustering is completed the user gets a Confirmation dialogue
+ asking "Would you like to Visualize the Cluster?"
+ 2.On pressing Yes Option to Select either "Bar Graph" or "Word Cloud" on left side of Pane. Select the appropriate one and click "Get Graph". You can see the Visualisation of all the Custers.
    
 
 Project Scope 
