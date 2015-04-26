@@ -7,6 +7,7 @@ Document clustering, Feature aggregation & Visualization
 
 
 Set Up:
+
 1.Clone the Project into your local disk using the command git clone https://github.com/nandkunal/IRE-Major-Project.git
 2.Open Eclipse and Right Click on the Project Pane, Select Import  and Choose Maven Project.
 3.Browse to samples directory, pom.xml should be visible for selection.
